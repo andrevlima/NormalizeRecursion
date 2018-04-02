@@ -6,7 +6,7 @@ import java.time.temporal.Temporal;
 import java.util.*;
 
 /**
- * Treat recursion known issues
+ * Treat circular dependency (infinity loop) issues
  *
  * @author Andre Lima
  */
