@@ -1,4 +1,5 @@
-import org.apache.commons.beanutils.BeanUtils;
+package celfocus.omnichannel.Common;
+
 import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.Field;
@@ -6,12 +7,12 @@ import java.time.temporal.Temporal;
 import java.util.*;
 
 /**
- * Treat circular dependency (infinity loop) issues
+ * Treat recursion known issues
  *
- * @author Andre Lima
+ * @author NB24054
  */
 public class NormalizeRecursion {
-    //Types we will avoid, we consider "safe" it means it can repeat
+
     static final Set<Class> WRAPPER_TYPES = new HashSet(Arrays.asList(
             Boolean.class, Character.class, Byte.class, Short.class, Date.class, Integer.class,
             Long.class, Float.class, Double.class, Void.class, String.class, Temporal.class));
@@ -40,7 +41,7 @@ public class NormalizeRecursion {
      *
      * Known-issue: When the object is an native array is not foreseen a solution to iterate and search inner and
      * also was never test with, unexpected behaviour can occurs.
-     * @author Andre Lima
+     * @author NB24054
      * @param obj Target
      */
     public static void cleanRecursion(Object obj) {
@@ -73,8 +74,8 @@ public class NormalizeRecursion {
 
                     if(value != null && !visitedList.contains(value)) {
                         cleanRecursion(value, visitedList);
-                    } else {
-                        BeanUtils.setProperty(obj, getter.getName(), null);
+                    } else if(visitedList.contains(value)) {
+                        new org.apache.commons.beanutils.PropertyUtilsBean().setProperty(obj, getter.getName(), null);
                         //getter.set(obj, null); //Dangerous because some properties is not interesting to be nullable (like native properties, enums...)
                     }
                 }
