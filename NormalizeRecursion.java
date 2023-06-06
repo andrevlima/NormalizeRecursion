@@ -8,8 +8,6 @@ import java.util.*;
 
 /**
  * Treat recursion known issues
- *
- * @author NB24054
  */
 public class NormalizeRecursion {
 
