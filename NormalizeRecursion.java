@@ -1,7 +1,4 @@
-package celfocus.omnichannel.Common;
-
 import org.apache.commons.lang3.ClassUtils;
-
 import java.lang.reflect.Field;
 import java.time.temporal.Temporal;
 import java.util.*;
